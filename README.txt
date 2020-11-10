@@ -1,0 +1,1 @@
+Quick tic-tac-toe program to practive Ruby language.
