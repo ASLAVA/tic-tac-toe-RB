@@ -6,4 +6,12 @@ class Player
     @name = name
     @symbol = symbol
   end
+
+  def getName
+    @name
+  end
+
+  def getSymbol
+    @symbol
+  end
 end
