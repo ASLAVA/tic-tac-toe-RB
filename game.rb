@@ -17,6 +17,27 @@ class Game
     puts ''
     show_players
     @board.show_board
+    @turn = @player_one.symbol == 'X' ? @player_one : @player_two
+    play
+  end
+
+  def play
+    puts "\n#{@turn.name}\'s turn"
+    players_choice = ''
+    loop do
+      puts 'Please enter a valid cell number (1-9) to add your symbol, or enter Help for further assistance'
+      players_choice = gets.chomp
+      #NEED TO ADD BETTER INPUT CHECK
+      if (1..9).include?(players_choice.to_i)
+        players_choice = players_choice.to_i - 1
+        puts players_choice, @board.check_cell(players_choice)
+        @board.check_cell(players_choice) == ' ' ? break : ''
+      end
+    end
+     @board.change_board(players_choice,@turn.symbol)
+     @board.show_board
+     @turn = @turn == @player_one ? @player_two : @player_one
+     check
   end
 
   def show_game_count
@@ -26,5 +47,9 @@ class Game
   def show_players
     puts "#{@player_one.name} : #{@player_one.symbol}"
     puts "#{@player_two.name} : #{@player_two.symbol}"
+  end
+
+  def check
+    play
   end
 end

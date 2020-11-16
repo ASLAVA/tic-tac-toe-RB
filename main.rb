@@ -6,9 +6,9 @@ require_relative 'game'
 def play_game
   puts 'Please enter your name: '
   name = gets.chomp
-  sym = rand(2)
-  human = Player.new(name, sym == 0 ? 'X' : 'O')
-  computer = Player.new('Computer', sym == 0 ? 'O' : 'X')
+  sym = rand(1..100)
+  human = Player.new(name, sym <= 50 ? 'X' : 'O')
+  computer = Player.new('Computer', sym <= 50 ? 'O' : 'X')
   game_session = Game.new(human, computer)
   game_session.start
   puts ''

@@ -14,9 +14,9 @@ class Board
     puts ''
     @board.each do
       last = count % 3
-      print last == 2 ? "\n------------\n" : " #{@board[count]} |"
+      print last == 2 ? " #{@board[count]}\n------------\n" : " #{@board[count]} |"
       count += 1
-      break if count == 8
+      break if count == 9
     end
     puts ''
   end
@@ -25,5 +25,9 @@ class Board
   def change_board(spot, symbol)
     'WARNING: Tried to change taken spot, time to debug.' unless @board[spot] == ' '
     @board[spot] = symbol
+  end
+
+  def check_cell(num)
+    @board[num]
   end
 end
