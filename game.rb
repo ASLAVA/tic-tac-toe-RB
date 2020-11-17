@@ -9,11 +9,9 @@ class Game
     @board = Board.new
     @player_one = player_one
     @player_two = player_two
-    @@game_count += 1
   end
 
   def start
-    puts "\n~~STARTING GAME~~"
     puts ''
     show_players
     @board.show_board
@@ -25,19 +23,26 @@ class Game
     puts "\n#{@turn.name}\'s turn"
     players_choice = ''
     loop do
-      puts 'Please enter a valid cell number (1-9) to add your symbol, or enter Help for further assistance'
-      players_choice = gets.chomp
-      #NEED TO ADD BETTER INPUT CHECK
-      if (1..9).include?(players_choice.to_i)
+      puts "\nPlease enter a valid cell number (1-9) to add your symbol, or enter Help for further assistance"
+      players_choice = gets.chomp.downcase
+      # NEED TO ADD BETTER INPUT CHECKelsif %w[help h].include?(answer)
+      if %w[h help].include?(players_choice)
+        help_guide
+      elsif (1..9).include?(players_choice.to_i)
         players_choice = players_choice.to_i - 1
-        puts players_choice, @board.check_cell(players_choice)
         @board.check_cell(players_choice) == ' ' ? break : ''
       end
     end
-     @board.change_board(players_choice,@turn.symbol)
-     @board.show_board
-     @turn = @turn == @player_one ? @player_two : @player_one
-     check
+    @turn.add_sym(players_choice)
+    @board.change_board(players_choice, @turn.symbol)
+    @board.show_board
+    if check_win
+      puts "Game Over! #{@turn.name} Wins!"
+      puts '~~ENDING GAME~~'
+      return
+    end
+    @turn = @turn == @player_one ? @player_two : @player_one
+    play
   end
 
   def show_game_count
@@ -49,7 +54,34 @@ class Game
     puts "#{@player_two.name} : #{@player_two.symbol}"
   end
 
-  def check
-    play
+  def check_win
+    positions = @turn.symbol_loc
+    # print "#{positions}\n"
+    # check if any of the winning combinations are present
+    WINNING_COMBO.each do |combo|
+      return true if (combo - positions).empty?
+    end
+    false
+  end
+
+  def help_guide
+    puts "\n\t T | I | C\t 1 | 2 | 3 "
+    puts "\t T | A | C\t 4 | 5 | 6 "
+    puts "\t T | O | E\t 7 | 8 | 9 "
+    puts "\n\t   Welcome to HELP GUIDE"
+    puts "\tWhen the game starts, you will be asked for the name of the two players."
+    puts "\tPlease enter yours and your apponents name any way you want."
+    puts "\tThe game will auto-pick who is assigned X and who is assigned O."
+    puts "\tX always goes first."
+    puts "\tWhen it's your turn you would be asked to enter 1-9 in order to put your symbol in."
+    puts "\tYou cannot put your symbol into a space taken by your apponent."
+    puts "\tGame ends in a WIN when a player puts his symbol in 3 consecutive slots."
+    puts "\n\t X | O |  \t X |   | X "
+    puts "\t O | X |  \t O | O | O "
+    puts "\t   | O | X\t   | X | X "
+    puts "\n\tGame ends in a TIE when all spaces are taken without a WIN condition."
+    puts "\n\t X | X | O\t O | X | O "
+    puts "\t O | O | X\t O | O | O "
+    puts "\t X | O | X\t   |   | X "
   end
 end
