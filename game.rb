@@ -4,7 +4,6 @@ require_relative 'board'
 # Game class make the board as well as keep track of the game
 class Game
   WINNING_COMBO = [[0, 1, 2], [0, 4, 8], [0, 3, 6], [1, 4, 7], [2, 4, 6], [2, 5, 8], [3, 4, 5], [6, 7, 8]].freeze
-  @@game_count = 0
   def initialize(player_one, player_two)
     @board = Board.new
     @player_one = player_one
@@ -73,15 +72,15 @@ class Game
     puts "\tPlease enter yours and your apponents name any way you want."
     puts "\tThe game will auto-pick who is assigned X and who is assigned O."
     puts "\tX always goes first."
-    puts "\tWhen it's your turn you would be asked to enter 1-9 in order to put your symbol in."
-    puts "\tYou cannot put your symbol into a space taken by your apponent."
-    puts "\tGame ends in a WIN when a player puts his symbol in 3 consecutive slots."
+    puts "\tWhen it's your turn you would be asked to enter 1-9 in order to put your mark in."
+    puts "\tYou cannot put your mark into a space taken by your apponent."
+    puts "\tGame ends in a WIN when a player places his marks in 3 in a horizontal, vertical, or diagonal row."
     puts "\n\t X | O |  \t X |   | X "
     puts "\t O | X |  \t O | O | O "
     puts "\t   | O | X\t   | X | X "
     puts "\n\tGame ends in a TIE when all spaces are taken without a WIN condition."
     puts "\n\t X | X | O\t O | X | O "
-    puts "\t O | O | X\t O | O | O "
-    puts "\t X | O | X\t   |   | X "
+    puts "\t O | O | X\t X | X | O "
+    puts "\t X | O | X\t X | O | X "
   end
 end

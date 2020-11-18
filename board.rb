@@ -14,9 +14,12 @@ class Board
     puts ''
     @board.each do
       last = count % 3
+      if count == 8
+        puts " #{@board[count]}"
+        break
+      end
       print last == 2 ? " #{@board[count]}\n------------\n" : " #{@board[count]} |"
       count += 1
-      break if count == 9
     end
     puts ''
   end
